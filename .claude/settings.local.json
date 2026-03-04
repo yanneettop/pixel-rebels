@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tr:*)",
+      "WebFetch(domain:www.coffeematterslondon.com)",
+      "WebFetch(domain:ictinuscontractors.co.uk)",
+      "WebFetch(domain:localhost)",
+      "Bash(python -m http.server:*)",
+      "Bash(start \"\" \"http://localhost:8080\")",
+      "Bash(python:*)",
+      "Bash(node -c:*)",
+      "Bash(node --check:*)",
+      "Bash(node -e:*)",
+      "Bash(start \"\" \"http://localhost:8080/portfolio\")",
+      "mcp__desktop-commander__read_process_output",
+      "Bash(curl:*)",
+      "Bash(start:*)",
+      "Bash(ls:*)",
+      "mcp__desktop-commander__get_more_search_results",
+      "mcp__desktop-commander__read_file",
+      "mcp__desktop-commander__interact_with_process",
+      "mcp__desktop-commander__write_file",
+      "Bash(dir:*)",
+      "mcp__Kapture_Browser_Automation__list_tabs",
+      "mcp__Kapture_Browser_Automation__new_tab"
+    ]
+  }
+}
