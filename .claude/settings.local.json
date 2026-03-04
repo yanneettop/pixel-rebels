@@ -22,7 +22,10 @@
       "mcp__desktop-commander__write_file",
       "Bash(dir:*)",
       "mcp__Kapture_Browser_Automation__list_tabs",
-      "mcp__Kapture_Browser_Automation__new_tab"
+      "mcp__Kapture_Browser_Automation__new_tab",
+      "Bash(npx skills find \"remote control\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(grep -o '\\\\\\\\u00a9.\\\\{0,20\\\\}\\\\|\\\\\\\\xA9.\\\\{0,20\\\\}\\\\|\\\\\\\\u00A9.\\\\{0,20\\\\}' \"C:/Users/chest/Desktop/Websites/Pixel Rebels/assets/index-IV7wzz_T.js\")"
     ]
   }
 }
