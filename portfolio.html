@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#FDFCFA" />
+
+  <title>Portfolio — Pixel Rebels</title>
+  <meta name="description" content="Explore Pixel Rebels' portfolio — stunning websites built for real businesses. Web design, branding, and digital experiences that drive results." />
+  <link rel="canonical" href="https://pixelrebels.space/portfolio" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FDFCFA;
+      --bg-warm: #F5F1EC;
+      --bg-dark: #1A1A2E;
+      --bg-dark-alt: #232340;
+      --text: #1A1A2E;
+      --text-muted: #6B6B78;
+      --text-light: #9B9BA5;
+      --text-on-dark: #F5F1EC;
+      --accent: #E8453C;
+      --accent-hover: #D03B33;
+      --accent-soft: #FEF0EF;
+      --accent-glow: rgba(232, 69, 60, 0.15);
+      --border: #E8E4DF;
+      --border-dark: #2E2E4A;
+      --card-bg: #FFFFFF;
+      --card-shadow: 0 1px 3px rgba(26,26,46,0.06), 0 6px 24px rgba(26,26,46,0.04);
+      --card-shadow-hover: 0 4px 12px rgba(26,26,46,0.08), 0 12px 40px rgba(26,26,46,0.06);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --max-w: 1200px;
+      --section-py: clamp(72px, 10vw, 120px);
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; }
+
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(26,26,46,0.055) 1px, transparent 1px);
+      background-size: 28px 28px; pointer-events: none; z-index: 0;
+    }
+
+    .bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0; animation: orbFloat 18s ease-in-out infinite alternate; }
+    .bg-orb--red {
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(232,69,60,0.18) 0%, rgba(232,69,60,0.06) 45%, transparent 70%);
+      top: 10%; right: -15%; animation-duration: 22s; animation-delay: 0s; opacity: 1;
+    }
+    .bg-orb--purple {
+      width: 750px; height: 750px;
+      background: radial-gradient(circle, rgba(120,80,220,0.14) 0%, rgba(120,80,220,0.04) 50%, transparent 70%);
+      top: 50%; left: -12%; animation-duration: 26s; animation-delay: -8s; opacity: 1;
+    }
+    .bg-orb--amber {
+      width: 650px; height: 650px;
+      background: radial-gradient(circle, rgba(255,150,30,0.13) 0%, rgba(255,150,30,0.04) 50%, transparent 70%);
+      bottom: 10%; right: 15%; animation-duration: 20s; animation-delay: -4s; opacity: 1;
+    }
+    @keyframes orbFloat {
+      0%   { transform: translate(0px, 0px) scale(1); }
+      33%  { transform: translate(40px, -60px) scale(1.08); }
+      66%  { transform: translate(-30px, 40px) scale(0.95); }
+      100% { transform: translate(60px, 20px) scale(1.05); }
+    }
+
+    .grain {
+      position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 256px;
+    }
+
+    section, nav, footer { position: relative; z-index: 1; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); display: inline-block;
+    }
+    .accent-text { color: var(--accent); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 15px; border-radius: 50px; padding: 14px 28px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 12px var(--accent-glow); }
+    .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 4px 24px rgba(232,69,60,0.3); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--text-on-dark); border: 1.5px solid var(--border-dark); }
+    .btn-secondary:hover { border-color: #fff; background: #fff; color: var(--bg-dark); }
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* =========================================
+   NAV
+   ========================================= */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.5s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.5s,
+              box-shadow 0.5s,
+              backdrop-filter 0.5s;
+  overflow: visible;
+}
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  height: 2.5px;
+  width: var(--scroll-progress, 0%);
+  background: linear-gradient(90deg, #E8453C 0%, #a855f7 40%, #3b82f6 70%, #E8453C 100%);
+  background-size: 200% auto;
+  animation: progressShimmer 3s linear infinite;
+  z-index: 10;
+  border-radius: 0 2px 2px 0;
+  transition: width 0.15s linear;
+}
+@keyframes progressShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+.nav::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,69,60,0.4), rgba(168,85,247,0.35), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.nav.scrolled::after { opacity: 1; }
+.nav.scrolled {
+  background: rgba(14, 13, 28, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom-color: rgba(255,255,255,0.07);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.25);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  color: rgba(245,241,236,0.95);
+  transition: color 0.4s;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 36px; height: 36px;
+  background: #E8453C;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 16px; font-weight: 800;
+  box-shadow: 0 0 0 0 rgba(232,69,60,0.5);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s;
+}
+.nav-logo:hover .nav-logo-icon {
+  transform: rotate(-8deg) scale(1.15);
+  box-shadow: 0 0 0 6px rgba(232,69,60,0.15);
+}
+.nav-logo-text {
+  background: linear-gradient(90deg, rgba(245,241,236,0.95) 0%, rgba(245,241,236,0.95) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background 0.4s;
+}
+.nav-logo:hover .nav-logo-text {
+  background: linear-gradient(90deg, #E8453C 0%, #a855f7 60%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.nav-links a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,241,236,0.6);
+  transition: color 0.3s;
+  position: relative;
+  padding-bottom: 2px;
+  text-decoration: none;
+}
+.nav-links a:not(.nav-cta)::before {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%; right: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, #E8453C, #a855f7);
+  border-radius: 2px;
+  transition: left 0.28s cubic-bezier(0.4,0,0.2,1), right 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+.nav-links a:not(.nav-cta):hover::before,
+.nav-links a:not(.nav-cta).active::before { left: 0; right: 0; }
+@keyframes navGrow {
+  0%   { transform: scale(1); }
+  60%  { transform: scale(1.55); }
+  80%  { transform: scale(1.45); }
+  100% { transform: scale(1.5); }
+}
+.nav-links a:not(.nav-cta):hover,
+.nav-links a:not(.nav-cta).active { color: rgba(245,241,236,0.95); }
+.nav-links a:not(.nav-cta):hover { animation: navGrow 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; display: inline-block; }
+
+/* CTA animated border */
+@property --cta-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes ctaSpin { to { --cta-angle: 360deg; } }
+@keyframes ctaGlow {
+  0%,100% { box-shadow: 0 0 14px rgba(232,69,60,0.35), 0 0 28px rgba(168,85,247,0.1); }
+  50%      { box-shadow: 0 0 22px rgba(232,69,60,0.55), 0 0 44px rgba(168,85,247,0.25); }
+}
+.nav-cta-wrap {
+  display: inline-flex;
+  border-radius: 50px;
+  padding: 1.5px;
+  background: conic-gradient(from var(--cta-angle), #E8453C 0%, #f97316 20%, #a855f7 45%, #3b82f6 65%, #a855f7 80%, #E8453C 100%);
+  animation: ctaSpin 4s linear infinite, ctaGlow 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.nav-cta-wrap:hover { animation: ctaSpin 1.2s linear infinite, ctaGlow 1s ease-in-out infinite; }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(18,16,36,0.95);
+  padding: 9px 20px;
+  border-radius: 48px;
+  white-space: nowrap;
+  transition: background 0.3s, transform 0.2s, gap 0.25s;
+  text-decoration: none;
+}
+.nav-cta:hover { background: rgba(28,22,50,0.98); gap: 10px; }
+.nav-cta svg { width: 13px; height: 13px; flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.nav-cta:hover svg { transform: translateX(3px); }
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .nav-cta-wrap { background: linear-gradient(135deg, #E8453C, #a855f7, #3b82f6); }
+}
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-toggle span {
+  width: 22px; height: 2px;
+  background: rgba(245,241,236,0.85);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 72px; left: 0; right: 0; bottom: 0;
+    background: #1A1A2E;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px 24px;
+    gap: 24px;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    z-index: 99;
+  }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links a { font-size: 18px; color: rgba(245,241,236,0.75) !important; }
+  .nav-cta-wrap { width: 100%; margin-top: 8px; }
+  .nav-cta { width: 100%; justify-content: center; }
+  .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .nav-toggle.open span:nth-child(2) { opacity: 0; }
+  .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+}
+
+    /* HERO */
+    .portfolio-hero {
+      background:
+        radial-gradient(120% 100% at 50% -20%, #2f315d 0%, #1f2140 34%, #141426 62%, #0f0f1a 100%),
+        linear-gradient(180deg, #1a1a2e 0%, #11111f 100%);
+      color: var(--text-on-dark);
+      padding: clamp(72px, 12vw, 130px) 0 clamp(64px, 10vw, 110px);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .portfolio-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,69,60,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .portfolio-hero-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent);
+      background: rgba(232,69,60,0.1); border: 1px solid rgba(232,69,60,0.2);
+      border-radius: 50px; padding: 6px 14px; margin-bottom: 28px;
+    }
+    .portfolio-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 68px); font-weight: 800;
+      line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 24px;
+    }
+    .portfolio-hero p {
+      font-size: clamp(16px, 2vw, 19px); color: rgba(245,241,236,0.65);
+      max-width: 560px; margin: 0 auto; line-height: 1.7;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; flex-wrap: wrap; margin-bottom: 56px;
+    }
+    .filter-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 14px; font-weight: 600; padding: 9px 18px;
+      border-radius: 50px; border: 1.5px solid var(--border);
+      color: var(--text-muted); background: var(--card-bg);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--text); color: var(--text); }
+    .filter-btn.active {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+      box-shadow: 0 2px 12px var(--accent-glow);
+    }
+    .filter-btn svg { width: 14px; height: 14px; }
+
+    /* GRID */
+    .portfolio-section { padding: var(--section-py) 0; background: rgba(253,252,250,0.65); }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .portfolio-card {
+      background: var(--card-bg); border-radius: var(--radius);
+      overflow: hidden; border: 1px solid var(--border);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column;
+    }
+    .portfolio-card[data-hidden] { display: none; }
+    .portfolio-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-4px); border-color: transparent; }
+
+    .portfolio-card-img { aspect-ratio: 16/10; overflow: hidden; background: var(--bg-warm); position: relative; }
+    .portfolio-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .portfolio-card:hover .portfolio-card-img img { transform: scale(1.04); }
+    .portfolio-card-overlay {
+      position: absolute; inset: 0; background: rgba(26,26,46,0.6);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .portfolio-card:hover .portfolio-card-overlay { opacity: 1; }
+    .portfolio-card-overlay span {
+      background: #fff; color: var(--text); padding: 10px 20px;
+      border-radius: 50px; font-size: 13px; font-weight: 600;
+    }
+
+    .portfolio-card-body { padding: 20px 20px 16px; flex: 1; }
+    .portfolio-card-type {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-bottom: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .portfolio-card-type--client {
+      color: #8A2D26;
+      background: #FDEBE9;
+      border: 1px solid #F4C5C1;
+    }
+    .portfolio-card-type--concept {
+      color: #4F3A79;
+      background: #F1ECFA;
+      border: 1px solid #DCCEF4;
+    }
+    .portfolio-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .portfolio-card-tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      color: var(--accent); background: var(--accent-soft);
+      padding: 3px 9px; border-radius: 50px;
+    }
+    .portfolio-card-tag--neutral {
+      color: var(--text-muted); background: var(--bg-warm); border: 1px solid var(--border);
+    }
+    .portfolio-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .portfolio-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+    .portfolio-intro {
+      max-width: 920px;
+      margin: 0 auto 24px;
+      text-align: center;
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .portfolio-card-footer {
+      padding: 14px 20px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .portfolio-card-client { font-size: 12px; color: var(--text-light); }
+    .portfolio-card-result {
+      font-size: 12px; font-weight: 600; color: var(--accent);
+    }
+    .portfolio-card-result--template { color: #7B5EA7; }
+
+    /* 2-col wide cards for row of 2 */
+    .portfolio-card--wide { grid-column: span 1; }
+
+    @media (max-width: 900px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .portfolio-grid { grid-template-columns: 1fr; } }
+
+    /* CTA */
+    .cta {
+      background: var(--bg-dark); padding: clamp(72px, 10vw, 120px) 0;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(232,69,60,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta h2 {
+      font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700; line-height: 1.12; color: var(--text-on-dark);
+      letter-spacing: -0.02em; margin-bottom: 20px;
+    }
+    .cta p { font-size: 17px; color: rgba(245,241,236,0.6); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+    /* FOOTER */
+    .footer { background: var(--bg-dark); color: rgba(245,241,236,0.5); padding: 48px 0; border-top: 1px solid var(--border-dark); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text-on-dark); font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-on-dark); }
+    .footer-copy { width: 100%; text-align: center; font-size: 13px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-dark); }
+    @media (max-width: 600px) { .footer-inner { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+
+    @media (prefers-reduced-motion: reduce) { .bg-orb { animation: none !important; } body::before { display: none; } .reveal { opacity: 1; transform: none; } }
+
+    /* ===== PORTFOLIO PREVIEW MODAL ===== */
+    .pf-backdrop {
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(8,7,18,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .pf-backdrop.open { opacity: 1; pointer-events: all; }
+    .pf-modal {
+      position: relative; background: #12101e;
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
+      width: 100%; max-width: 860px; max-height: 90vh; overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(232,69,60,0.08);
+      transform: scale(0.9) translateY(24px);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      display: flex; flex-direction: column;
+    }
+    .pf-backdrop.open .pf-modal { transform: scale(1) translateY(0); }
+    .pf-modal-img-wrap { position: relative; flex-shrink: 0; aspect-ratio: 16/9; overflow: hidden; background: #0d0c1a; }
+    .pf-modal-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pf-modal-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(18,16,30,0.95) 100%); pointer-events: none; }
+    .pf-modal-body { padding: 24px 32px 32px; display: flex; flex-direction: column; gap: 10px; }
+    .pf-modal-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: rgba(232,69,60,0.12); border: 1px solid rgba(232,69,60,0.2); border-radius: 50px; padding: 4px 12px; width: fit-content; }
+    .pf-modal-title { font-family: var(--font-display); font-size: clamp(22px,3vw,30px); font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+    .pf-modal-desc { font-size: 15px; color: rgba(245,241,236,0.55); line-height: 1.7; }
+    .pf-modal-actions { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+    .pf-btn-live { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 700; background: var(--accent); color: #fff; padding: 12px 24px; border-radius: 50px; cursor: pointer; border: none; transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 20px rgba(232,69,60,0.35); }
+    .pf-btn-live:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .pf-btn-live svg { width: 14px; height: 14px; }
+    .pf-btn-close-modal { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.65); padding: 12px 22px; border-radius: 50px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; }
+    .pf-btn-close-modal:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .pf-close-x { position: absolute; top: 14px; right: 14px; z-index: 10; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,0.8); font-size: 18px; transition: background 0.2s, color 0.2s; line-height: 1; }
+    .pf-close-x:hover { background: rgba(232,69,60,0.7); color: #fff; }
+    .pf-browser { position: fixed; inset: 0; z-index: 500; display: flex; align-items: center; justify-content: center; padding: 32px 24px; background: rgba(8,7,18,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .pf-browser.open { opacity: 1; pointer-events: all; }
+    .pf-browser-window { position: relative; display: flex; flex-direction: column; width: 100%; max-width: 1100px; height: 100%; max-height: 88vh; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06); transform: scale(0.94) translateY(16px); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    .pf-browser.open .pf-browser-window { transform: scale(1) translateY(0); }
+    .pf-browser-chrome { height: 52px; flex-shrink: 0; background: #1c1a2e; border-bottom: 1px solid rgba(255,255,255,0.07); display: flex; align-items: center; gap: 12px; padding: 0 16px; }
+    .pf-browser-dots { display: flex; gap: 6px; }
+    .pf-browser-dots span { width: 12px; height: 12px; border-radius: 50%; display: block; }
+    .pf-browser-dots span:nth-child(1) { background: #ff5f57; }
+    .pf-browser-dots span:nth-child(2) { background: #febc2e; }
+    .pf-browser-dots span:nth-child(3) { background: #28c840; }
+    .pf-browser-url { flex: 1; height: 30px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; padding: 0 12px; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.45); overflow: hidden; }
+    .pf-browser-url svg { width: 12px; height: 12px; flex-shrink: 0; color: rgba(255,255,255,0.3); }
+    .pf-browser-url span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pf-browser-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .pf-browser-newtab { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; font-family: var(--font-body); background: var(--accent); color: #fff; padding: 6px 14px; border-radius: 50px; cursor: pointer; border: none; white-space: nowrap; transition: background 0.2s; text-decoration: none; }
+    .pf-browser-newtab:hover { background: var(--accent-hover); }
+    .pf-browser-newtab svg { width: 11px; height: 11px; }
+    .pf-browser-x { width: 30px; height: 30px; border-radius: 8px; background: rgba(255,255,255,0.07); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 16px; transition: background 0.2s; flex-shrink: 0; }
+    .pf-browser-x:hover { background: rgba(232,69,60,0.6); color: #fff; }
+    .pf-browser-frame { flex: 1; border: none; width: 100%; background: #fff; min-height: 0; }
+    .pf-browser-infobar { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 28px; background: #12101e; border-top: 1px solid rgba(255,255,255,0.07); }
+    .pf-bi-left { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .pf-bi-meta { display: flex; align-items: center; gap: 8px; }
+    .pf-bi-tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: rgba(232,69,60,0.12); border: 1px solid rgba(232,69,60,0.2); border-radius: 50px; padding: 3px 10px; }
+    .pf-bi-title { font-family: var(--font-display); font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pf-bi-desc { font-size: 12px; color: rgba(245,241,236,0.4); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 600px; }
+    .pf-btn-fullsite { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 14px; font-weight: 700; background: var(--accent); color: #fff; padding: 12px 24px; border-radius: 50px; text-decoration: none; transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 20px rgba(232,69,60,0.35); white-space: nowrap; }
+    .pf-btn-fullsite:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .pf-btn-fullsite svg { width: 13px; height: 13px; }
+    @media (max-width: 640px) { .pf-browser-infobar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 16px; } .pf-bi-desc { display: none; } .pf-btn-fullsite { width: 100%; justify-content: center; } }
+  </style>
+</head>
+
+<body>
+
+<div class="bg-orbs" aria-hidden="true">
+  <div class="bg-orb bg-orb--red"></div>
+  <div class="bg-orb bg-orb--purple"></div>
+  <div class="bg-orb bg-orb--amber"></div>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-icon">P</span>
+      <span class="nav-logo-text">PixelRebels</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/portfolio.html" class="active">Portfolio</a>
+      <a href="/#process">Process</a>
+      <a href="/pricing.html">Pricing</a>
+      <span class="nav-cta-wrap">
+        <a href="/#quote" class="nav-cta">
+          Get Quote
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="portfolio-hero">
+  <div class="container">
+    <div class="portfolio-hero-label reveal">Our Work</div>
+    <h1 class="reveal reveal-delay-1">
+      Projects That<br>
+      <span class="accent-text">Speak for Themselves</span>
+    </h1>
+    <p class="reveal reveal-delay-2">
+      Explore our portfolio of websites that have helped businesses grow, convert more customers, and stand out from the competition.
+    </p>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section">
+  <div class="container">
+
+    <!-- Filter bar -->
+    <p class="portfolio-intro reveal">
+      From real client builds to carefully crafted concept projects, every portfolio piece reflects the way Pixel Rebels combines strategy, design, and digital execution to create brands that look sharp and perform with purpose.
+    </p>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" data-filter="all">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        All Projects
+      </button>
+      <button class="filter-btn" data-filter="business">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Business
+      </button>
+      <button class="filter-btn" data-filter="creative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        Creative
+      </button>
+      <button class="filter-btn" data-filter="template">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Templates
+      </button>
+    </div>
+
+    <!-- Grid -->
+    <div class="portfolio-grid" id="portfolioGrid">
+
+      <!-- Coffee Matters London -->
+      <div class="portfolio-card reveal" data-category="business"
+        data-img="assets/coffeematters_portofolio2.webp"
+        data-title="Coffee Matters London"
+        data-tag="Client Project"
+        data-desc="Coffee Matters was developed by Pixel Rebels as a full end-to-end brand and website project. The work included website strategy, copywriting, visual direction, photography selection, SEO structure, and marketing support to create a warm, modern, and conversion-ready digital presence."
+        data-url="https://www.coffeematterslondon.com/">
+        <div class="portfolio-card-img">
+          <img src="assets/coffeematters_portofolio2.webp" alt="Coffee Matters London" loading="lazy" width="1200" height="800">
+          <div class="portfolio-card-overlay"><span>Preview Design</span></div>
+        </div>
+        <div class="portfolio-card-body">
+          <h3>Coffee Matters London</h3>
+          <span class="portfolio-card-type portfolio-card-type--client">Client Project</span>
+          <p class="portfolio-card-desc">Full brand and website project including strategy, copy, visuals, SEO, and marketing direction.</p>
+          <div class="portfolio-card-tags">
+            <span class="portfolio-card-tag">Strategy</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Copywriting</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Visual Direction</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">SEO</span>
+          </div>
+        </div>
+        <div class="portfolio-card-footer">
+          <span class="portfolio-card-client">Client Project</span>
+          <span class="portfolio-card-result">Strategy + Copywriting + Visual Direction + SEO + Marketing Support</span>
+        </div>
+      </div>
+
+      <!-- Ictinus Contractors -->
+      <div class="portfolio-card reveal reveal-delay-1" data-category="business"
+        data-img="assets/Ictinus_portofolio.webp"
+        data-title="Ictinus Contractors"
+        data-tag="Client Project"
+        data-desc="Ictinus Contractors was created by Pixel Rebels as a complete business website and brand presentation. The project covered structure, messaging, visual direction, SEO foundations, and lead-focused strategy to position the company as professional, trustworthy, and premium."
+        data-url="https://ictinuscontractors.co.uk/">
+        <div class="portfolio-card-img">
+          <img src="assets/Ictinus_portofolio.webp" alt="Ictinus Contractors" loading="lazy" width="1200" height="800">
+          <div class="portfolio-card-overlay"><span>Preview Design</span></div>
+        </div>
+        <div class="portfolio-card-body">
+          <h3>Ictinus Contractors</h3>
+          <span class="portfolio-card-type portfolio-card-type--client">Client Project</span>
+          <p class="portfolio-card-desc">Complete business website and brand presentation built with a focus on trust, clarity, and lead generation.</p>
+          <div class="portfolio-card-tags">
+            <span class="portfolio-card-tag">Brand Positioning</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Copywriting</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">SEO</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Conversion Strategy</span>
+          </div>
+        </div>
+        <div class="portfolio-card-footer">
+          <span class="portfolio-card-client">Client Project</span>
+          <span class="portfolio-card-result">Website Structure + Brand Positioning + Copywriting + SEO + Conversion Strategy</span>
+        </div>
+      </div>
+
+      <!-- Levofix Ltd -->
+      <div class="portfolio-card reveal reveal-delay-2" data-category="business"
+        data-img="assets/levofix_portofolio.webp"
+        data-title="Levofix Ltd"
+        data-tag="Concept Project"
+        data-desc="A studio concept created by Pixel Rebels to explore premium visual direction, strong layout structure, and clear brand presentation within a modern digital experience."
+          data-url="https://bce3fdf3.levofix.pages.dev/">
+        <div class="portfolio-card-img">
+          <img src="assets/levofix_portofolio.webp" alt="Levofix Ltd" loading="lazy" width="1200" height="800">
+          <div class="portfolio-card-overlay"><span>Preview Design</span></div>
+        </div>
+        <div class="portfolio-card-body">
+          <h3>Levofix Ltd</h3>
+          <span class="portfolio-card-type portfolio-card-type--concept">Concept Project</span>
+          <p class="portfolio-card-desc">A modern concept for an automotive service brand balancing credibility, conversion intent, and strong visual hierarchy.</p>
+          <div class="portfolio-card-tags">
+            <span class="portfolio-card-tag">Concept</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Branding</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Layout</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Messaging</span>
+          </div>
+        </div>
+        <div class="portfolio-card-footer">
+          <span class="portfolio-card-client">Concept Project</span>
+          <span class="portfolio-card-result portfolio-card-result--template">Concept / Branding / Layout / Messaging</span>
+        </div>
+      </div>
+
+      <!-- Brew House -->
+      <div class="portfolio-card reveal" data-category="creative template"
+        data-img="assets/brewhouse-portofolio.webp"
+        data-title="Brew House"
+        data-tag="Concept Project"
+        data-desc="A showcase build designed by Pixel Rebels to demonstrate how strategy, design, and messaging can come together in a refined industry-specific website."
+        data-url="https://coffeehouse-60o.pages.dev/">
+        <div class="portfolio-card-img">
+          <img src="assets/brewhouse-portofolio.webp" alt="Brew House" loading="lazy" width="1200" height="800">
+          <div class="portfolio-card-overlay"><span>Preview Design</span></div>
+        </div>
+        <div class="portfolio-card-body">
+          <h3>Brew House</h3>
+          <span class="portfolio-card-type portfolio-card-type--concept">Concept Project</span>
+          <p class="portfolio-card-desc">A concept-led hospitality showcase combining warm visual tone, clear structure, and conversion-aware page flow.</p>
+          <div class="portfolio-card-tags">
+            <span class="portfolio-card-tag">Concept</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Branding</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Layout</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Messaging</span>
+          </div>
+        </div>
+        <div class="portfolio-card-footer">
+          <span class="portfolio-card-client">Concept Project</span>
+          <span class="portfolio-card-result portfolio-card-result--template">Concept / Branding / Layout / Messaging</span>
+        </div>
+      </div>
+
+      <!-- The Groom Room -->
+      <div class="portfolio-card reveal reveal-delay-1" data-category="creative template"
+        data-img="assets/thegroomroom-portofolio.webp"
+        data-title="The Groom Room"
+        data-tag="Concept Project"
+        data-desc="Developed as a concept project by Pixel Rebels, this piece highlights the studio's approach to branding, visual storytelling, and conversion-aware web design."
+        data-url="https://strap-and-scraper.pages.dev">
+        <div class="portfolio-card-img">
+          <img src="assets/thegroomroom-portofolio.webp" alt="The Groom Room" loading="lazy" width="1200" height="800">
+          <div class="portfolio-card-overlay"><span>Preview Design</span></div>
+        </div>
+        <div class="portfolio-card-body">
+          <h3>The Groom Room</h3>
+          <span class="portfolio-card-type portfolio-card-type--concept">Concept Project</span>
+          <p class="portfolio-card-desc">A premium grooming concept experience designed to showcase strong brand personality and commercially focused UX decisions.</p>
+          <div class="portfolio-card-tags">
+            <span class="portfolio-card-tag">Concept</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Branding</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Layout</span>
+            <span class="portfolio-card-tag--neutral portfolio-card-tag">Messaging</span>
+          </div>
+        </div>
+        <div class="portfolio-card-footer">
+          <span class="portfolio-card-client">Concept Project</span>
+          <span class="portfolio-card-result portfolio-card-result--template">Concept / Branding / Layout / Messaging</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <h2 class="reveal">Ready to Join Our Portfolio?</h2>
+    <p class="reveal reveal-delay-1">Let's create something amazing together. Your project could be our next success story.</p>
+    <div class="cta-actions reveal reveal-delay-2">
+      <a href="/#quote" class="btn btn-primary">
+        Start Your Project
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PORTFOLIO PREVIEW MODAL ===== -->
+<div class="pf-backdrop" id="pfBackdrop" role="dialog" aria-modal="true" aria-label="Project Preview">
+  <div class="pf-modal" id="pfModal">
+    <button class="pf-close-x" id="pfCloseX" aria-label="Close">✕</button>
+    <div class="pf-modal-img-wrap">
+      <img id="pfImg" src="" alt="">
+    </div>
+    <div class="pf-modal-body">
+      <span class="pf-modal-tag" id="pfTag"></span>
+      <div class="pf-modal-title" id="pfTitle"></div>
+      <p class="pf-modal-desc" id="pfDesc"></p>
+      <div class="pf-modal-actions">
+        <button class="pf-btn-live" id="pfBtnLive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          View Live Site
+        </button>
+        <button class="pf-btn-close-modal" id="pfBtnClose">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BROWSER / IFRAME -->
+<div class="pf-browser" id="pfBrowser">
+  <div class="pf-browser-window">
+    <div class="pf-browser-chrome">
+      <div class="pf-browser-dots"><span></span><span></span><span></span></div>
+      <div class="pf-browser-url">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span id="pfBrowserUrl"></span>
+      </div>
+      <div class="pf-browser-actions">
+        <button class="pf-browser-x" id="pfBrowserClose">✕</button>
+      </div>
+    </div>
+    <iframe class="pf-browser-frame" id="pfFrame" src="" title="Live site preview" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    <div class="pf-browser-infobar">
+      <div class="pf-bi-left">
+        <div class="pf-bi-meta">
+          <span class="pf-bi-tag" id="pfBiTag"></span>
+        </div>
+        <div class="pf-bi-title" id="pfBiTitle"></div>
+        <p class="pf-bi-desc" id="pfBiDesc"></p>
+      </div>
+      <a class="pf-btn-fullsite" id="pfBtnFullSite" href="#" target="_blank" rel="noopener">
+        See Full Site
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="footer-brand">
+        <span class="nav-logo-icon" style="width:30px;height:30px;font-size:14px;">P</span>
+        PixelRebels
+      </a>
+      <div class="footer-links">
+        <a href="/about.html">About</a>
+        <a href="/portfolio.html">Portfolio</a>
+        <a href="/#process">Process</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Pixel Rebels. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // NAV scroll behavior + progress bar
+  const nav = document.getElementById('nav');
+  function updateNav() {
+    const scrollY = window.scrollY;
+    nav.classList.toggle('scrolled', scrollY > 20);
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+    document.documentElement.style.setProperty('--scroll-progress', progress + '%');
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navToggle.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  // Filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.portfolio-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const cats = card.dataset.category || '';
+        if (filter === 'all' || cats.includes(filter)) {
+          card.style.display = '';
+          setTimeout(() => card.classList.add('visible'), 10);
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // ===== PORTFOLIO PREVIEW BROWSER =====
+  (() => {
+    const browser      = document.getElementById('pfBrowser');
+    const pfFrame      = document.getElementById('pfFrame');
+    const pfUrlBar     = document.getElementById('pfBrowserUrl');
+    const pfBiTag      = document.getElementById('pfBiTag');
+    const pfBiTitle    = document.getElementById('pfBiTitle');
+    const pfBiDesc     = document.getElementById('pfBiDesc');
+    const pfBtnFullSite = document.getElementById('pfBtnFullSite');
+
+    function openPreview(card) {
+      const d = card.dataset;
+      const url = d.url || '';
+      if (window.innerWidth < 768) {
+        if (url) window.open(url, '_blank', 'noopener');
+        return;
+      }
+      pfUrlBar.textContent = url;
+      pfBiTag.textContent = d.tag || '';
+      pfBiTitle.textContent = d.title || '';
+      pfBiDesc.textContent = d.desc || '';
+      pfBtnFullSite.href = url;
+      pfFrame.src = url;
+      browser.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeBrowser() {
+      browser.classList.remove('open');
+      pfFrame.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.portfolio-card').forEach(card => {
+      const overlay = card.querySelector('.portfolio-card-overlay');
+      if (overlay) {
+        overlay.style.cursor = 'pointer';
+        overlay.addEventListener('click', () => openPreview(card));
+      }
+    });
+
+    document.getElementById('pfBrowserClose').addEventListener('click', closeBrowser);
+    browser.addEventListener('click', e => { if (e.target === browser) closeBrowser(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBrowser(); });
+  })();
+</script>
+
+</body>
+</html>
