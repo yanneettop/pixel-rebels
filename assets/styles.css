@@ -1362,7 +1362,8 @@
     .testimonials .section-label { color: var(--text-on-dark); }
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(320px, 390px));
+      justify-content: center;
       gap: 28px;
     }
     @media (max-width: 900px) {
