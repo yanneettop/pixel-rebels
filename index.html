@@ -235,37 +235,11 @@
       </a>
     </div>
   </div>
-</section>
-
-<!-- ========== STATS ========== -->
-<section class="stats">
-  <div class="container">
-    <div class="stats-grid reveal">
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <div class="stat-value">5&#9733;</div>
-        <div class="stat-label">Rated</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <div class="stat-value">100%</div>
-        <div class="stat-label">Client Satisfaction</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="stat-value">Fast</div>
-        <div class="stat-label">Turnaround</div>
-      </div>
-    </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
   </div>
 </section>
-
 
 <!-- ========== PORTFOLIO ========== -->
 <section class="portfolio" id="portfolio">
@@ -328,7 +302,7 @@
     </div>
 
     <div style="text-align:center;margin-top:40px;" class="reveal reveal-delay-3">
-      <a href="/portfolio.html" class="btn btn-secondary" style="color:var(--text);border-color:var(--border);">
+      <a href="/portfolio.html" class="btn btn-secondary">
         View All Projects
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
@@ -772,20 +746,16 @@
       path.setAttribute('fill', 'none');
       path.setAttribute('pathLength', '1');
 
-      // Animated dash
-      const dashLen = 0.55 + Math.random() * 0.4;
-      const dashOff = -(Math.random() * 1.2);
-      path.style.strokeDasharray = dashLen.toFixed(4) + 'px 1px';
-      path.style.strokeDashoffset = dashOff.toFixed(4) + 'px';
-
       // Vary opacity with a sine-based pattern
       const opacity = 0.3 + 0.5 * Math.abs(Math.sin((i / pathCount) * Math.PI));
       path.style.opacity = opacity.toFixed(3);
 
-      // Animate each path with staggered timing
-      const dur = 15 + Math.random() * 10;
-      const delay = i * 0.15;
-      path.style.animation = `pathDash ${dur.toFixed(1)}s ${delay.toFixed(2)}s ease-in-out infinite alternate`;
+      // Stagger the draw-in transition delay per path
+      path.style.transitionDelay = (i * 0.08).toFixed(2) + 's';
+
+      // Store animation params for after draw-in
+      path.dataset.dur = (15 + Math.random() * 10).toFixed(1);
+      path.dataset.delay = (i * 0.15).toFixed(2);
 
       frag.appendChild(path);
     }
@@ -866,7 +836,40 @@
       }
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => revealObserver.observe(el));
+
+  // Hero reveals trigger immediately on load (already in viewport)
+  const heroReveals = document.querySelectorAll('.hero .reveal');
+  heroReveals.forEach(el => {
+    el.classList.add('visible');
+  });
+
+  // Draw in background paths after hero reveal finishes
+  const heroPathsSvg = document.querySelector('.hero-paths-svg');
+  if (heroPathsSvg) {
+    const longestDelay = 300; // match reveal-delay-3 (0.3s)
+    const revealDuration = 700; // 0.7s transition
+    setTimeout(() => {
+      heroPathsSvg.classList.add('active');
+      // After draw-in completes, switch to looping dash animation
+      const drawInTime = 2500 + (36 * 80); // transition + max stagger
+      setTimeout(() => {
+        heroPathsSvg.querySelectorAll('path').forEach(p => {
+          p.style.transition = 'none';
+          p.style.transitionDelay = '';
+          const dashLen = (0.55 + Math.random() * 0.4).toFixed(4);
+          p.style.strokeDasharray = dashLen + 'px 1px';
+          p.style.strokeDashoffset = '0';
+          p.style.animation = `pathDash ${p.dataset.dur}s ${p.dataset.delay}s ease-in-out infinite alternate`;
+        });
+      }, drawInTime);
+    }, longestDelay + revealDuration);
+  }
+
+  reveals.forEach(el => {
+    if (!el.classList.contains('visible')) {
+      revealObserver.observe(el);
+    }
+  });
 
   // ========== PORTFOLIO PREVIEW MODAL ==========
   (function() {
@@ -1072,6 +1075,8 @@
   addTilt('.stat-card', 10);
   addTilt('.pricing-card', 6);
   addTilt('.process-step', 8);
+  addTilt('.about-visual-card', 6);
+  addTilt('.testimonial-card', 8);
 
   // ========== HERO CURSOR SPOTLIGHT ==========
   const heroSection = document.querySelector('.hero');

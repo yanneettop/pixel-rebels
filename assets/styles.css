@@ -102,7 +102,7 @@
     section, .stats, nav, footer { position: relative; z-index: 1; }
 
     /* Light sections — more transparent so orbs bleed through vividly */
-    .portfolio    { background: rgba(253,252,250,0.42) !important; }
+    .portfolio    { background: var(--bg) !important; }
     .process      { background: rgba(253,252,250,0.42) !important; }
     .about        { background: rgba(253,252,250,0.42) !important; }
 
@@ -297,6 +297,16 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
+    .reveal-pop {
+      opacity: 0;
+      transform: translateY(40px) scale(0.9);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-pop.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
     /* =========================================
        NAVIGATION
        ========================================= */
@@ -411,6 +421,7 @@
       display: flex;
       align-items: center;
       gap: 32px;
+      margin-left: auto;
     }
     .nav-links a {
       font-family: 'Space Grotesk', sans-serif;
@@ -474,25 +485,33 @@
     .nav-cta-wrap {
       display: inline-flex;
       border-radius: 50px;
-      padding: 1.5px;
-      background: linear-gradient(135deg, #E8453C, #a855f7);
+      padding: 2px;
+      background: linear-gradient(135deg, #E8453C, #a855f7, #3b82f6);
+      background-size: 200% 200%;
+      animation: ctaGradient 3s ease infinite;
       flex-shrink: 0;
+      box-shadow: 0 0 12px rgba(232,69,60,0.25), 0 0 24px rgba(168,85,247,0.1);
       transition: box-shadow 0.3s, transform 0.2s;
     }
+    @keyframes ctaGradient {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
     .nav-cta-wrap:hover {
-      box-shadow: 0 0 16px rgba(232,69,60,0.4), 0 0 32px rgba(168,85,247,0.15);
-      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(232,69,60,0.5), 0 0 40px rgba(168,85,247,0.25);
+      transform: translateY(-2px);
     }
 
     .nav-cta {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 7px;
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 700;
       color: #fff;
-      background: rgba(18, 16, 36, 0.95);
+      background: transparent;
       padding: 9px 20px;
       border-radius: 48px;
       white-space: nowrap;
@@ -500,7 +519,7 @@
       text-decoration: none;
     }
     .nav-cta:hover {
-      background: rgba(28, 22, 50, 0.98);
+      background: rgba(255,255,255,0.1);
       gap: 10px;
     }
     .nav-cta svg {
@@ -658,17 +677,23 @@
     }
     .hero-scroll {
       position: absolute;
-      bottom: -60px;
+      bottom: clamp(24px, 4vw, 40px);
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
+      font-size: 11px;
       color: rgba(245,241,236,0.4);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      font-weight: 500;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
     }
     .hero-scroll-line {
       width: 1px;
@@ -715,7 +740,10 @@
     .service-card::before,
     .stat-card::before,
     .pricing-card::before,
-    .process-step::before {
+    .process-step::before,
+    .about-value::before,
+    .about-visual-card::after,
+    .testimonial-card::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -729,7 +757,10 @@
     .service-card:hover::before,
     .stat-card:hover::before,
     .pricing-card:hover::before,
-    .process-step:hover::before {
+    .process-step:hover::before,
+    .about-value:hover::before,
+    .about-visual-card:hover::after,
+    .testimonial-card:hover::before {
       opacity: 1;
     }
 
@@ -797,10 +828,15 @@
       opacity: 0.6;
     }
     .hero-paths-svg path {
-      transition: stroke-dashoffset 0.5s ease;
+      stroke-dasharray: 1px 1px;
+      stroke-dashoffset: 1;
+    }
+    .hero-paths-svg.active path {
+      transition: stroke-dashoffset 2.5s ease-out;
+      stroke-dashoffset: 0;
     }
     @keyframes pathDash {
-      0% { stroke-dashoffset: 1; }
+      0% { stroke-dashoffset: 0; }
       100% { stroke-dashoffset: -1; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -813,22 +849,33 @@
        STATS
        ========================================= */
     .stats {
-      padding: 0;
+      padding: clamp(48px, 7vw, 80px) 0 clamp(60px, 8vw, 100px);
       position: relative;
       z-index: 2;
+      background: linear-gradient(180deg, #0f0f1a 0%, #13132a 40%, #1a1a2e 100%);
+    }
+    .stats::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(180deg, transparent, var(--bg));
+      pointer-events: none;
     }
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      background: var(--border);
+      background: rgba(255,255,255,0.06);
       border-radius: var(--radius);
       overflow: hidden;
-      margin-top: -40px;
-      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .stat-card {
-      background: var(--card-bg);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
       padding: 36px 24px;
       text-align: center;
     }
@@ -836,7 +883,7 @@
       width: 44px;
       height: 44px;
       margin: 0 auto 14px;
-      background: var(--accent-soft);
+      background: rgba(232,69,60,0.12);
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
@@ -848,18 +895,18 @@
       font-family: var(--font-display);
       font-size: clamp(28px, 4vw, 40px);
       font-weight: 800;
-      color: var(--text);
+      color: #f5f1ec;
       letter-spacing: -0.02em;
     }
     .stat-label {
       font-size: 13px;
-      color: var(--text-muted);
+      color: rgba(245,241,236,0.5);
       margin-top: 4px;
       font-weight: 500;
     }
 
     @media (max-width: 640px) {
-      .stats-grid { grid-template-columns: 1fr; margin-top: -24px; }
+      .stats-grid { grid-template-columns: 1fr; }
     }
 
     /* =========================================
@@ -1092,7 +1139,8 @@
     .process-step {
       text-align: center;
       position: relative;
-      padding: 0 12px;
+      padding: 16px 12px;
+      border-radius: 32px;
     }
     .process-step-num {
       width: 64px;
@@ -1283,6 +1331,8 @@
       position: relative;
     }
     .about-visual-card {
+      --glow-x: 50%;
+      --glow-y: 50%;
       background: var(--bg-dark);
       border-radius: var(--radius);
       padding: 48px 36px;
@@ -1322,11 +1372,19 @@
       margin-top: 24px;
     }
     .about-value {
+      --glow-x: 50%;
+      --glow-y: 50%;
       background: rgba(245,241,236,0.08);
       border: 1px solid var(--border-dark);
       border-radius: var(--radius-sm);
       padding: 16px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .about-value:hover {
+      border-color: rgba(232,69,60,0.3);
     }
     .about-value-icon { font-size: 22px; margin-bottom: 6px; }
     .about-value span {
@@ -1346,8 +1404,18 @@
        ========================================= */
     .testimonials {
       padding: var(--section-py) 0;
+      padding-bottom: 0;
       background: var(--bg-warm);
       position: relative; overflow: hidden;
+    }
+    .testimonials::after {
+      content: '';
+      position: relative;
+      display: block;
+      height: 120px;
+      margin-top: 60px;
+      background: linear-gradient(to bottom, transparent 0%, var(--bg-dark) 100%);
+      pointer-events: none;
     }
     .testimonials::before {
       content: ''; position: absolute; inset: 0;
@@ -1370,12 +1438,15 @@
       .testimonials-grid { grid-template-columns: 1fr; }
     }
     .testimonial-card {
+      --glow-x: 50%;
+      --glow-y: 50%;
       background: rgba(255,255,255,0.04);
       border-radius: var(--radius);
       padding: 36px 28px;
       text-align: center;
       border: 1px solid rgba(255,255,255,0.1);
       position: relative;
+      overflow: hidden;
       backdrop-filter: blur(8px);
       transition: border-color 0.3s;
     }
