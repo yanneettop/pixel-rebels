@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#FDFCFA" />
 
   <title>About Us — Pixel Rebels</title>
-  <meta name="description" content="Meet the team behind Pixel Rebels — a compact studio of specialists building bold digital experiences through design, technology and modern visual storytelling." />
+  <meta name="description" content="Meet the founders behind Pixel Rebels — a small London studio building clear, professional websites for small businesses across the UK." />
   <link rel="canonical" href="https://pixelrebels.space/about" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -432,19 +432,15 @@
       font-weight: 800; line-height: 1.08;
       letter-spacing: -0.03em;
       margin-bottom: 24px;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .about-hero p {
       font-size: clamp(16px, 2vw, 19px);
       color: rgba(245,241,236,0.65);
       max-width: 600px; margin: 0 auto;
       line-height: 1.7;
-    }
-    .about-hero-quote {
-      margin-top: 40px;
-      font-size: 15px;
-      color: rgba(245,241,236,0.35);
-      font-style: italic;
-      letter-spacing: 0.01em;
     }
 
     /* =========================================
@@ -467,22 +463,69 @@
       padding: 32px 28px;
       box-shadow: var(--card-shadow);
       transition: box-shadow 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
     .team-card:hover {
       box-shadow: var(--card-shadow-hover);
       transform: translateY(-4px);
     }
+    .team-card-media {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
     .team-avatar {
-      width: 52px; height: 52px;
-      border-radius: var(--radius-sm);
+      width: 84px; height: 96px;
+      border-radius: 20px;
       display: flex; align-items: center; justify-content: center;
       font-family: var(--font-display); font-weight: 800;
-      font-size: 18px; color: #fff;
-      margin-bottom: 20px;
+      font-size: 22px; color: #fff;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .team-avatar::after {
+      content: 'Portrait space';
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      text-align: center;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+    .team-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-warm);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
     .team-avatar--yannis { background: linear-gradient(135deg, #E8453C, #c73530); }
     .team-avatar--dimitris { background: linear-gradient(135deg, #7B5EA7, #5c3f8a); }
     .team-avatar--farid { background: linear-gradient(135deg, #2E9E6B, #1d7a50); }
+    .team-card-copy {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
     .team-card h3 {
       font-family: var(--font-display);
       font-size: 20px; font-weight: 700;
@@ -498,6 +541,7 @@
     }
     .team-tags {
       display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: auto;
     }
     .team-tag {
       font-size: 12px; font-weight: 600;
@@ -509,9 +553,15 @@
     @media (max-width: 900px) {
       .team-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
     }
+    @media (max-width: 640px) {
+      .team-card-media {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
 
     /* =========================================
-       VALUES SECTION
+       STORY SECTION
        ========================================= */
     .values {
       padding: var(--section-py) 0;
@@ -519,15 +569,14 @@
     }
     .values-header { text-align: center; margin-bottom: 56px; }
     .values-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      max-width: 860px;
+      margin: 0 auto;
     }
     .value-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px 24px;
+      padding: clamp(28px, 4vw, 44px);
       box-shadow: var(--card-shadow);
       transition: box-shadow 0.3s, transform 0.3s;
     }
@@ -536,31 +585,22 @@
       transform: translateY(-3px);
     }
     .value-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      margin-bottom: 18px;
+      width: 12px; height: 12px; border-radius: 50%;
+      margin-bottom: 22px;
     }
     .value-dot--1 { background: #E8453C; }
-    .value-dot--2 { background: #7B5EA7; }
-    .value-dot--3 { background: #2E9E6B; }
-    .value-dot--4 { background: #F59E0B; }
-    .value-card h3 {
-      font-family: var(--font-display);
-      font-size: 16px; font-weight: 700;
-      color: var(--text); margin-bottom: 10px;
-    }
     .value-card p {
-      font-size: 13px; color: var(--text-muted); line-height: 1.7;
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 18px;
     }
-
-    @media (max-width: 900px) {
-      .values-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 480px) {
-      .values-grid { grid-template-columns: 1fr; }
+    .value-card p:last-child {
+      margin-bottom: 0;
     }
 
     /* =========================================
-       CAPABILITIES SECTION
+       HOW WE WORK SECTION
        ========================================= */
     .capabilities {
       padding: var(--section-py) 0;
@@ -570,15 +610,16 @@
     .capabilities-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 860px;
+      gap: 28px;
+      max-width: 960px;
       margin: 0 auto;
+      align-items: stretch;
     }
     .capability-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px 28px;
+      padding: 32px 32px;
       box-shadow: var(--card-shadow);
       display: flex; gap: 20px; align-items: flex-start;
       transition: box-shadow 0.3s, transform 0.3s;
@@ -587,20 +628,58 @@
       box-shadow: var(--card-shadow-hover);
       transform: translateY(-3px);
     }
+    .capability-card--intro {
+      display: block;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,241,236,0.92) 100%);
+    }
+    .capability-card--intro p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-top: 18px;
+      margin-bottom: 28px;
+      max-width: 480px;
+    }
+    .work-points {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+    }
+    .work-points li {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      align-items: start;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .work-points li::before {
+      content: '';
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      border: 1px solid rgba(232,69,60,0.18);
+      box-shadow: inset 0 0 0 5px rgba(232,69,60,0.9);
+      margin-top: 1px;
+    }
     .capability-num {
       font-family: var(--font-display);
-      font-size: 28px; font-weight: 800;
-      color: var(--accent); opacity: 0.25;
+      font-size: 24px; font-weight: 800;
+      color: var(--accent); opacity: 0.3;
       line-height: 1; flex-shrink: 0;
       margin-top: 2px;
     }
     .capability-body h3 {
       font-family: var(--font-display);
-      font-size: 17px; font-weight: 700;
+      font-size: 18px; font-weight: 700;
       color: var(--text); margin-bottom: 8px;
     }
     .capability-body p {
-      font-size: 14px; color: var(--text-muted); line-height: 1.7;
+      font-size: 14px; color: var(--text-muted); line-height: 1.75;
     }
 
     @media (max-width: 640px) {
@@ -719,16 +798,12 @@
 <!-- ========== HERO ========== -->
 <section class="about-hero">
   <div class="container">
-    <div class="about-hero-label reveal">Our Story</div>
+    <div class="about-hero-label reveal">Who We Are</div>
     <h1 class="reveal reveal-delay-1">
-      Built by Rebels.<br>
-      <span class="accent-text">Driven by craft.</span>
+      We started this because small businesses deserve better websites.
     </h1>
     <p class="reveal reveal-delay-2">
-      A compact team of creatives and specialists building bold digital experiences through design, technology and modern visual storytelling.
-    </p>
-    <p class="about-hero-quote reveal reveal-delay-3">
-      "We didn't start to follow trends. We started to build digital worlds with more identity, more energy and more impact."
+      Not template sites. Not overpriced agency builds. Real websites that actually bring in customers — built by people who care about getting it right.
     </p>
   </div>
 </section>
@@ -738,133 +813,123 @@
   <div class="container">
     <div class="team-header">
       <span class="section-label reveal">Our Team</span>
-      <h2 class="section-heading section-heading--center reveal reveal-delay-1">Meet the Core Team</h2>
+      <h2 class="section-heading section-heading--center reveal reveal-delay-1">Who You'll Work With</h2>
       <p class="section-sub section-sub--center reveal reveal-delay-2" style="margin-top:16px;">
-        A compact team of creatives and specialists building bold digital experiences through design, technology and modern visual storytelling.
+        A founder-led studio means the people doing the work are the people you actually speak to. No layers, no handoffs, no corporate theatre.
       </p>
     </div>
 
     <div class="team-grid">
       <!-- Yannis -->
       <div class="team-card reveal">
-        <div class="team-avatar team-avatar--yannis">YK</div>
-        <h3>Yannis</h3>
-        <div class="team-role">Founder / Creative Director / Lead Designer</div>
-        <p class="team-bio">
-          Yannis leads the vision behind Pixel Rebels, shaping the brand direction, website design and overall creative strategy behind each project. He focuses on building digital experiences that feel modern, distinctive and conversion-aware.
-        </p>
-        <div class="team-tags">
+        <div class="team-card-media">
+          <div class="team-avatar team-avatar--yannis" aria-hidden="true">YK</div>
+          <div class="team-card-badge">Founder-led</div>
+        </div>
+        <div class="team-card-copy">
+          <h3>Yannis</h3>
+          <div class="team-role">Design &amp; Creative Direction</div>
+          <p class="team-bio">
+            Your main point of contact. Yannis leads every project from first conversation to final launch — handling brand direction, website design, copywriting, and client communication. If you work with Pixel Rebels, you work with Yannis.
+          </p>
+          <div class="team-tags">
           <span class="team-tag">Branding</span>
           <span class="team-tag">Web Design</span>
-          <span class="team-tag">Creative Direction</span>
+          <span class="team-tag">Copywriting</span>
+          </div>
         </div>
       </div>
 
       <!-- Dimitris -->
       <div class="team-card reveal reveal-delay-1">
-        <div class="team-avatar team-avatar--dimitris">DM</div>
-        <h3>Dimitris</h3>
-        <div class="team-role">Backend &amp; Security Specialist</div>
-        <p class="team-bio">
-          Dimitris handles the technical backbone of projects, with a focus on backend systems, internet security and clean implementation. His knowledge of HTML and CSS also helps bridge structure and interface with practical precision.
-        </p>
-        <div class="team-tags">
+        <div class="team-card-media">
+          <div class="team-avatar team-avatar--dimitris" aria-hidden="true">DM</div>
+          <div class="team-card-badge">Technical build</div>
+        </div>
+        <div class="team-card-copy">
+          <h3>Dimitris</h3>
+          <div class="team-role">Development &amp; Security</div>
+          <p class="team-bio">
+            Dimitris builds what Yannis designs. Clean code, fast-loading pages, secure hosting, and websites that work properly on every device. He handles the technical side so you don't have to think about it.
+          </p>
+          <div class="team-tags">
           <span class="team-tag">Backend</span>
           <span class="team-tag">Security</span>
-          <span class="team-tag">HTML/CSS</span>
+          <span class="team-tag">Performance</span>
+          </div>
         </div>
       </div>
 
       <!-- Farid -->
       <div class="team-card reveal reveal-delay-2">
-        <div class="team-avatar team-avatar--farid">FA</div>
-        <h3>Farid</h3>
-        <div class="team-role">3D, Video &amp; AI Creative Specialist</div>
-        <p class="team-bio">
-          Farid creates high-impact visual assets across 3D, video and AI-powered creative production. From ad creatives to motion-driven brand visuals, he brings extra depth, attention and modern energy to the Pixel Rebels workflow.
-        </p>
-        <div class="team-tags">
+        <div class="team-card-media">
+          <div class="team-avatar team-avatar--farid" aria-hidden="true">FA</div>
+          <div class="team-card-badge">Optional creative edge</div>
+        </div>
+        <div class="team-card-copy">
+          <h3>Farid</h3>
+          <div class="team-role">3D, Video &amp; AI Creative</div>
+          <p class="team-bio">
+            When a project calls for something more visual — product renders, animated content, video, or AI-powered creative assets — Farid brings it to life. Not every project needs this, but when it does, the results stand out.
+          </p>
+          <div class="team-tags">
           <span class="team-tag">3D Design</span>
           <span class="team-tag">Video</span>
           <span class="team-tag">AI Creatives</span>
+          </div>
         </div>
       </div>
     </div>
 
     <p class="reveal" style="text-align:center;margin-top:48px;font-size:15px;color:var(--text-muted);font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;">
-      Three specialists. One streamlined creative engine. Built to move fast, think sharply and create digital work that stands out.
+      Small enough to stay personal. Experienced enough to get it right.
     </p>
   </div>
 </section>
 
-<!-- ========== CORE VALUES ========== -->
+<!-- ========== ORIGIN STORY ========== -->
 <section class="values">
   <div class="container">
     <div class="values-header">
-      <span class="section-label reveal">What Drives Us</span>
-      <h2 class="section-heading section-heading--center reveal reveal-delay-1">Our Core Values</h2>
+      <span class="section-label reveal">Origin Story</span>
+      <h2 class="section-heading section-heading--center reveal reveal-delay-1">How Pixel Rebels started</h2>
     </div>
 
     <div class="values-grid">
       <div class="value-card reveal">
         <div class="value-dot value-dot--1"></div>
-        <h3>Bold by Design</h3>
-        <p>Create work with character, confidence and visual impact. We don't play it safe — every project is an opportunity to stand out.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-1">
-        <div class="value-dot value-dot--2"></div>
-        <h3>Built with Intention</h3>
-        <p>Every choice should serve the brand, the user and the bigger picture. Nothing is random — every detail has purpose.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-2">
-        <div class="value-dot value-dot--3"></div>
-        <h3>Clarity Over Noise</h3>
-        <p>Strong digital presence comes from focus, not clutter. Clean layouts, focused messaging and purposeful visuals.</p>
-      </div>
-      <div class="value-card reveal reveal-delay-3">
-        <div class="value-dot value-dot--4"></div>
-        <h3>Modern Tools, Human Thinking</h3>
-        <p>We leverage AI, modern frameworks and smart workflows — guided by creative judgment and real strategy.</p>
+        <p>We're three friends — a designer, a developer, and a creative specialist — who kept seeing the same problem: small businesses either couldn't afford a proper website, or they'd pay a big agency and end up with something generic that didn't represent them.</p>
+        <p>So we built Pixel Rebels. A small, focused studio where every project gets real attention, not just a slot in a production line. We handle design, development, branding, and SEO — everything you need to look professional online and start getting leads.</p>
+        <p>We're based in London, we work with businesses across the UK, and we keep things simple: clear pricing, honest timelines, and a website you're actually proud of.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== CAPABILITIES ========== -->
+<!-- ========== HOW WE WORK ========== -->
 <section class="capabilities">
   <div class="container">
     <div class="capabilities-header">
-      <span class="section-label reveal">Our Capabilities</span>
-      <h2 class="section-heading section-heading--center reveal reveal-delay-1">What We Bring</h2>
+      <span class="section-label reveal">How We Work</span>
+      <h2 class="section-heading section-heading--center reveal reveal-delay-1">Small team. Full attention.</h2>
     </div>
 
     <div class="capabilities-grid">
-      <div class="capability-card reveal">
-        <div class="capability-num">01</div>
-        <div class="capability-body">
-          <h3>Web Design &amp; UI Systems</h3>
-          <p>Modern, responsive websites designed to look sharp and work smoothly across every screen.</p>
-        </div>
+      <div class="capability-card capability-card--intro reveal">
+        <h3 class="section-heading" style="font-size:clamp(24px,3vw,34px);">Focused projects. No production line.</h3>
+        <p>We take on a handful of projects at a time. That means you're not waiting in a queue, you're not getting passed between account managers, and you're not chasing us for updates. When we're working on your project, we're actually working on your project.</p>
+        <a href="/#quote" class="btn btn-primary">Start Your Project</a>
       </div>
       <div class="capability-card reveal reveal-delay-1">
         <div class="capability-num">02</div>
         <div class="capability-body">
-          <h3>Brand Direction</h3>
-          <p>Clear visual identity and creative direction that helps businesses feel more distinctive and cohesive.</p>
-        </div>
-      </div>
-      <div class="capability-card reveal reveal-delay-2">
-        <div class="capability-num">03</div>
-        <div class="capability-body">
-          <h3>Backend Structure &amp; Security</h3>
-          <p>A stronger technical foundation with clean structure, reliable implementation and attention to digital stability.</p>
-        </div>
-      </div>
-      <div class="capability-card reveal reveal-delay-3">
-        <div class="capability-num">04</div>
-        <div class="capability-body">
-          <h3>3D, Video &amp; AI Content</h3>
-          <p>Modern visual assets and creative production built to help brands capture attention and stay memorable.</p>
+          <h3>What that means for you</h3>
+          <ul class="work-points">
+            <li>One point of contact from start to finish</li>
+            <li>Turnaround in days or weeks, not months</li>
+            <li>No hidden costs — your quote is your quote</li>
+            <li>You own everything we build</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -874,17 +939,14 @@
 <!-- ========== CTA ========== -->
 <section class="cta">
   <div class="container">
-    <h2 class="reveal">Let's Build Something Bold</h2>
+    <h2 class="reveal">Ready to talk about your project?</h2>
     <p class="reveal reveal-delay-1">
-      Whether you need a sharper brand, a stronger website or high-impact creative assets — Pixel Rebels is built to help you stand out with clarity and confidence.
+      Tell us what you need and we'll get back to you within 24 hours with honest advice — whether that's a quote, a suggestion, or just pointing you in the right direction.
     </p>
     <div class="cta-actions reveal reveal-delay-2">
       <a href="/#quote" class="btn btn-primary">
-        Start a Project
+        Start Your Project
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="/#portfolio" class="btn btn-secondary">
-        View Our Work
       </a>
     </div>
   </div>
