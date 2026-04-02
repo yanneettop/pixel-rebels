@@ -9,29 +9,29 @@
   <meta name="theme-color" content="#FDFCFA" />
 
   <!-- Primary Meta -->
-  <title>Pixel Rebels - Creative Digital Agency</title>
-  <meta name="description" content="Pixel Rebels is a creative digital agency crafting exceptional web experiences, branding, and marketing solutions that drive growth." />
+  <title>Pixel Rebels — Web Design for Small Business | London Studio</title>
+  <meta name="description" content="Modern, conversion-focused websites for small and growing businesses. Clear pricing from £399. London-based studio — fast turnaround, no agency complexity." />
   <meta name="author" content="Pixel Rebels" />
   <link rel="canonical" href="https://pixelrebels.space/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Pixel Rebels - Creative Digital Agency" />
-  <meta property="og:description" content="Pixel Rebels is a creative digital agency crafting exceptional web experiences, branding, and marketing solutions that drive growth." />
+  <meta property="og:title" content="Pixel Rebels — Web Design for Small Business | London Studio" />
+  <meta property="og:description" content="Modern, conversion-focused websites for small and growing businesses. Clear pricing from £399. London-based studio — fast turnaround, no agency complexity." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixelrebels.space/" />
   <meta property="og:image" content="https://pixelrebels.space/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Pixel Rebels - Creative Digital Agency" />
+  <meta property="og:image:alt" content="Pixel Rebels — Web Design for Small Business | London Studio" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Pixel Rebels" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Pixel Rebels - Creative Digital Agency" />
-  <meta name="twitter:description" content="Pixel Rebels is a creative digital agency crafting exceptional web experiences, branding, and marketing solutions that drive growth." />
+  <meta name="twitter:title" content="Pixel Rebels — Web Design for Small Business | London Studio" />
+  <meta name="twitter:description" content="Modern, conversion-focused websites for small and growing businesses. Clear pricing from £399. London-based studio — fast turnaround, no agency complexity." />
   <meta name="twitter:image" content="https://pixelrebels.space/og-image.png" />
-  <meta name="twitter:image:alt" content="Pixel Rebels - Creative Digital Agency" />
+  <meta name="twitter:image:alt" content="Pixel Rebels — Web Design for Small Business | London Studio" />
 
   <!-- Schema: Organization -->
   <script type="application/ld+json">
@@ -206,12 +206,8 @@
 
 <!-- ========== HERO ========== -->
 <section class="hero" id="hero">
-  <!-- Animated Background Paths -->
-  <div class="hero-paths">
-    <svg class="hero-paths-svg" viewBox="-400 -300 1200 1200" fill="none" preserveAspectRatio="xMidYMid slice">
-      <title>Background Paths</title>
-    </svg>
-  </div>
+  <!-- Animated Dotted Surface -->
+  <div class="hero-dots" id="heroDots"></div>
   <div class="container hero-inner">
     <div class="hero-badge reveal">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -234,10 +230,10 @@
         View Our Work
       </a>
     </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
   </div>
 </section>
 
@@ -705,6 +701,7 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   let scrollLockCount = 0;
   let scrollLockY = 0;
@@ -728,51 +725,89 @@
     }
   }
 
-  // ========== ANIMATED BACKGROUND PATHS ==========
-  (function() {
-    const svg = document.querySelector('.hero-paths-svg');
-    if (!svg) return;
-    const pathCount = 36;
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < pathCount; i++) {
-      const offset = i * 5;
-      const x1 = -380 + offset;
-      const y1 = -189 - (i * 6);
-      const cx1 = -312 + offset;
-      const cy1 = 216 - (i * 6);
-      const x2 = 152 - offset;
-      const y2 = 343 - (i * 6);
-      const cx2 = 616 - offset;
-      const cy2 = 470 - (i * 6);
-      const x3 = 684 - offset;
-      const y3 = 875 - (i * 6);
-      const d = `M${x1} ${y1}C${x1} ${y1} ${cx1} ${cy1} ${x2} ${y2}C${cx2} ${cy2} ${x3} ${y3} ${x3} ${y3}`;
+  // ========== DOTTED SURFACE BACKGROUND ==========
+  (function initDottedSurface() {
+    var container = document.getElementById('heroDots');
+    if (!container || typeof THREE === 'undefined') return;
 
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', d);
-      const sw = 0.5 + (i * 0.03);
-      const so = 0.1 + (i * 0.03);
-      path.setAttribute('stroke', 'currentColor');
-      path.setAttribute('stroke-width', sw.toFixed(2));
-      path.setAttribute('stroke-opacity', so.toFixed(2));
-      path.setAttribute('fill', 'none');
-      path.setAttribute('pathLength', '1');
+    var SEPARATION = 150;
+    var AMOUNTX = 40;
+    var AMOUNTY = 60;
 
-      // Vary opacity with a sine-based pattern
-      const opacity = 0.3 + 0.5 * Math.abs(Math.sin((i / pathCount) * Math.PI));
-      path.style.opacity = opacity.toFixed(3);
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x0f0f1a, 2000, 10000);
 
-      // Stagger the draw-in transition delay per path
-      path.style.transitionDelay = (i * 0.08).toFixed(2) + 's';
+    var camera = new THREE.PerspectiveCamera(
+      60, window.innerWidth / window.innerHeight, 1, 10000
+    );
+    camera.position.set(0, 355, 1220);
 
-      // Store animation params for after draw-in
-      path.dataset.dur = (15 + Math.random() * 10).toFixed(1);
-      path.dataset.delay = (i * 0.15).toFixed(2);
+    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
 
-      frag.appendChild(path);
+    // Build particle grid
+    var positions = [];
+    var colors = [];
+    for (var ix = 0; ix < AMOUNTX; ix++) {
+      for (var iy = 0; iy < AMOUNTY; iy++) {
+        positions.push(
+          ix * SEPARATION - (AMOUNTX * SEPARATION) / 2,
+          0,
+          iy * SEPARATION - (AMOUNTY * SEPARATION) / 2
+        );
+        colors.push(200 / 255, 200 / 255, 200 / 255);
+      }
     }
-    svg.appendChild(frag);
-    svg.offsetHeight; // force layout so initial stroke-dashoffset:1 is computed
+
+    var geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+    var material = new THREE.PointsMaterial({
+      size: 8,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      sizeAttenuation: true
+    });
+
+    var points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    var count = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      var posArr = geometry.attributes.position.array;
+      var i = 0;
+      for (var ax = 0; ax < AMOUNTX; ax++) {
+        for (var ay = 0; ay < AMOUNTY; ay++) {
+          posArr[i * 3 + 1] =
+            Math.sin((ax + count) * 0.3) * 50 +
+            Math.sin((ay + count) * 0.5) * 50;
+          i++;
+        }
+      }
+      geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      count += 0.03;
+    }
+
+    window.addEventListener('resize', function() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Respect reduced-motion preference
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      animate();
+    } else {
+      renderer.render(scene, camera);
+    }
   })();
 
   // ========== MOBILE NAV ==========
@@ -855,69 +890,6 @@
   heroReveals.forEach(el => {
     el.classList.add('visible');
   });
-
-  // Draw in background paths after hero reveal finishes
-  const heroPathsSvg = document.querySelector('.hero-paths-svg');
-  if (heroPathsSvg) {
-    const longestDelay = 300; // match reveal-delay-3 (0.3s)
-    const revealDuration = 700; // 0.7s transition
-    setTimeout(() => {
-      // Double-rAF ensures the initial stroke-dashoffset:1 state
-      // is painted before the transition to 0 begins
-      heroPathsSvg.offsetHeight;
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          heroPathsSvg.classList.add('active');
-        });
-      });
-      // After draw-in completes, switch to looping dash animation
-      const drawInTime = 2500 + (36 * 80); // transition + max stagger
-      setTimeout(() => {
-        heroPathsSvg.querySelectorAll('path').forEach(p => {
-          p.style.transition = 'none';
-          p.style.transitionDelay = '';
-          const dashLen = (0.55 + Math.random() * 0.4).toFixed(4);
-          p.style.strokeDasharray = dashLen + 'px 1px';
-          p.style.strokeDashoffset = '0';
-          p.style.animation = `pathDash ${p.dataset.dur}s ${p.dataset.delay}s ease-in-out infinite alternate`;
-        });
-      }, drawInTime);
-    }, longestDelay + revealDuration);
-
-    // Replay draw-in when page is restored from bfcache
-    window.addEventListener('pageshow', function(e) {
-      if (e.persisted) {
-        heroPathsSvg.classList.remove('active');
-        heroPathsSvg.querySelectorAll('path').forEach((p, i) => {
-          p.style.transition = 'none';
-          p.style.transitionDelay = '';
-          p.style.animation = '';
-          p.style.strokeDasharray = '';
-          p.style.strokeDashoffset = '';
-        });
-        heroPathsSvg.offsetHeight;
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            heroPathsSvg.querySelectorAll('path').forEach((p, i) => {
-              p.style.transitionDelay = (i * 0.08).toFixed(2) + 's';
-            });
-            heroPathsSvg.classList.add('active');
-            const drawInTime = 2500 + (36 * 80);
-            setTimeout(() => {
-              heroPathsSvg.querySelectorAll('path').forEach(p => {
-                p.style.transition = 'none';
-                p.style.transitionDelay = '';
-                const dashLen = (0.55 + Math.random() * 0.4).toFixed(4);
-                p.style.strokeDasharray = dashLen + 'px 1px';
-                p.style.strokeDashoffset = '0';
-                p.style.animation = `pathDash ${p.dataset.dur}s ${p.dataset.delay}s ease-in-out infinite alternate`;
-              });
-            }, drawInTime);
-          });
-        });
-      }
-    });
-  }
 
   reveals.forEach(el => {
     if (!el.classList.contains('visible')) {
@@ -1220,7 +1192,7 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const heroInner  = document.querySelector('.hero-inner');
-    const heroPaths  = document.querySelector('.hero-paths');
+    const heroPaths  = document.querySelector('.hero-dots');
     const orbRed     = document.querySelector('.bg-orb--red');
     const orbPurple  = document.querySelector('.bg-orb--purple');
 
