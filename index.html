@@ -1156,12 +1156,14 @@
     heroSection.addEventListener('mouseleave', () => { spotlightActive = false; });
   }
 
-  // ========== SUBTLE LETTER SHUFFLE ON HERO H1 HOVER ==========
+  // ========== HERO H1 LETTER EFFECTS ==========
   const heroH1 = document.querySelector('.hero h1');
-  if (heroH1) {
-    const glitchChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (heroH1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const shuffleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const glitchChars  = '!#$%&*@~^';
     const activeIntervals = [];
 
+    // --- Hover: left-to-right letter shuffle ---
     function runShuffle(span) {
       const original = span.dataset.original || span.textContent;
       span.dataset.original = original;
@@ -1170,8 +1172,7 @@
         span.textContent = original.split('').map((char, idx) => {
           if (char === ' ') return ' ';
           if (idx < i) return original[idx];
-          // only scramble a couple chars ahead of the reveal point
-          if (idx <= i + 2) return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+          if (idx <= i + 2) return shuffleChars[Math.floor(Math.random() * shuffleChars.length)];
           return original[idx];
         }).join('');
         i += 1;
@@ -1191,14 +1192,59 @@
       });
     }
 
-    heroH1.addEventListener('mouseenter', () => {
-      resetAll();
-      heroH1.querySelectorAll('span, .accent-line').forEach(span => runShuffle(span));
-    });
+    heroH1.addEventListener('mouseenter', () => { resetAll(); heroH1.querySelectorAll('span, .accent-line').forEach(runShuffle); });
+    heroH1.addEventListener('mouseleave', resetAll);
 
-    heroH1.addEventListener('mouseleave', () => {
-      resetAll();
-    });
+    // --- Ambient: random letter flicker every few seconds ---
+    (function ambientGlitch() {
+      // Collect all non-space characters across the h1 as { node, index } refs
+      function getLetterNodes() {
+        const nodes = [];
+        heroH1.querySelectorAll('span, .accent-line').forEach(span => {
+          const original = span.dataset.original || span.textContent;
+          span.dataset.original = original;
+          original.split('').forEach((char, idx) => {
+            if (char.trim()) nodes.push({ span, idx, char });
+          });
+        });
+        return nodes;
+      }
+
+      function flashLetter() {
+        const nodes = getLetterNodes();
+        if (!nodes.length) return;
+
+        // Pick 1–2 random positions to glitch
+        const count = Math.random() < 0.4 ? 2 : 1;
+        const picks = [];
+        while (picks.length < count) {
+          const pick = nodes[Math.floor(Math.random() * nodes.length)];
+          if (!picks.includes(pick)) picks.push(pick);
+        }
+
+        picks.forEach(({ span, idx }) => {
+          const original = span.dataset.original;
+          const frames = 3 + Math.floor(Math.random() * 3); // 3–5 frames
+          let f = 0;
+          const flicker = setInterval(() => {
+            const chars = original.split('');
+            chars[idx] = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            span.textContent = chars.join('');
+            f++;
+            if (f >= frames) {
+              clearInterval(flicker);
+              span.textContent = original;
+            }
+          }, 60);
+        });
+
+        // Next glitch in 1.8–4.5s
+        setTimeout(flashLetter, 1800 + Math.random() * 2700);
+      }
+
+      // Start first glitch after a short delay
+      setTimeout(flashLetter, 2500);
+    })();
   }
 
   // ========== PARALLAX ==========
