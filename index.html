@@ -1156,34 +1156,48 @@
     heroSection.addEventListener('mouseleave', () => { spotlightActive = false; });
   }
 
-  // ========== GLITCH TEXT ON HERO H1 HOVER ==========
+  // ========== SUBTLE LETTER SHUFFLE ON HERO H1 HOVER ==========
   const heroH1 = document.querySelector('.hero h1');
   if (heroH1) {
-    const glitchChars = '!<>-_\\/[]{}—=+*^?#________';
-    let glitchTimeout = null;
-    heroH1.querySelectorAll('[class], span, :not(span)');
-    heroH1.addEventListener('mouseenter', () => {
-      let iterations = 0;
-      clearInterval(glitchTimeout);
-      const spans = heroH1.querySelectorAll('span, .accent-line');
-      spans.forEach(span => {
-        const original = span.textContent;
-        span.dataset.original = original;
-        span.dataset.glitching = '1';
-        let i = 0;
-        const interval = setInterval(() => {
-          span.textContent = original.split('').map((char, idx) => {
-            if (char === ' ') return ' ';
-            if (idx < i) return original[idx];
-            return glitchChars[Math.floor(Math.random() * glitchChars.length)];
-          }).join('');
-          i += 1.5;
-          if (i >= original.length) {
-            clearInterval(interval);
-            span.textContent = original;
-          }
-        }, 28);
+    const glitchChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const activeIntervals = [];
+
+    function runShuffle(span) {
+      const original = span.dataset.original || span.textContent;
+      span.dataset.original = original;
+      let i = 0;
+      const interval = setInterval(() => {
+        span.textContent = original.split('').map((char, idx) => {
+          if (char === ' ') return ' ';
+          if (idx < i) return original[idx];
+          // only scramble a couple chars ahead of the reveal point
+          if (idx <= i + 2) return glitchChars[Math.floor(Math.random() * glitchChars.length)];
+          return original[idx];
+        }).join('');
+        i += 1;
+        if (i >= original.length) {
+          clearInterval(interval);
+          span.textContent = original;
+        }
+      }, 40);
+      activeIntervals.push(interval);
+    }
+
+    function resetAll() {
+      activeIntervals.forEach(id => clearInterval(id));
+      activeIntervals.length = 0;
+      heroH1.querySelectorAll('span, .accent-line').forEach(span => {
+        if (span.dataset.original) span.textContent = span.dataset.original;
       });
+    }
+
+    heroH1.addEventListener('mouseenter', () => {
+      resetAll();
+      heroH1.querySelectorAll('span, .accent-line').forEach(span => runShuffle(span));
+    });
+
+    heroH1.addEventListener('mouseleave', () => {
+      resetAll();
     });
   }
 
