@@ -1545,16 +1545,43 @@
       position: relative;
       overflow: hidden;
     }
+
+    /* Wide elliptical aurora rising from the bottom */
     .cta-section::before {
       content: '';
       position: absolute;
-      bottom: -40%;
+      bottom: -30%;
       left: 50%;
       transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(232,69,60,0.1), transparent);
+      width: 140%;
+      height: 70%;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 100%, rgba(232,69,60,0.22) 0%, rgba(232,69,60,0.06) 50%, transparent 75%),
+        radial-gradient(ellipse 40% 35% at 28% 90%, rgba(168,85,247,0.10) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 35% at 72% 90%, rgba(232,69,60,0.08) 0%, transparent 65%);
       pointer-events: none;
+      animation: ctaAurora 6s ease-in-out infinite alternate;
+    }
+
+    /* Thin horizon line glow across the bottom */
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,69,60,0.45) 30%, rgba(168,85,247,0.3) 70%, transparent);
+      pointer-events: none;
+    }
+
+    @keyframes ctaAurora {
+      0%   { opacity: 0.85; transform: translateX(-50%) scaleX(1); }
+      100% { opacity: 1;    transform: translateX(-50%) scaleX(1.06); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-section::before { animation: none; }
     }
     .cta-inner {
       text-align: center;
