@@ -32,6 +32,23 @@
 
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 
+    /* ── Custom scrollbar ── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f0f1a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #E8453C 0%, #a855f7 100%);
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff5a51 0%, #c084fc 100%);
+    }
+    /* Firefox */
+    * { scrollbar-width: thin; scrollbar-color: #E8453C #0f0f1a; }
+
     body {
       font-family: var(--font-body);
       color: var(--text);
