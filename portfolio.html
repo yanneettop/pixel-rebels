@@ -393,9 +393,22 @@
       overflow: hidden; border: 1px solid var(--border);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex; flex-direction: column;
+      position: relative;
+      cursor: pointer;
+    }
+    .portfolio-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle 200px at var(--glow-x) var(--glow-y), rgba(232,69,60,0.13) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 0;
     }
     .portfolio-card[data-hidden] { display: none; }
     .portfolio-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-4px); border-color: transparent; }
+    .portfolio-card:hover::before { opacity: 1; }
 
     .portfolio-card-img { aspect-ratio: 16/10; overflow: hidden; background: var(--bg-warm); position: relative; }
     .portfolio-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -411,7 +424,7 @@
       border-radius: 50px; font-size: 13px; font-weight: 600;
     }
 
-    .portfolio-card-body { padding: 20px 20px 16px; flex: 1; }
+    .portfolio-card-body { padding: 20px; flex: 1; position: relative; z-index: 1; }
     .portfolio-card-type {
       display: inline-flex;
       align-items: center;
@@ -434,7 +447,7 @@
       background: #F1ECFA;
       border: 1px solid #DCCEF4;
     }
-    .portfolio-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .portfolio-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
     .portfolio-card-tag {
       display: inline-block; font-size: 11px; font-weight: 600;
       color: var(--accent); background: var(--accent-soft);
@@ -457,8 +470,43 @@
     .portfolio-card-footer {
       padding: 14px 20px; border-top: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      position: relative; z-index: 1;
     }
     .portfolio-card-client { font-size: 12px; color: var(--text-light); }
+    .portfolio-card-link {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .portfolio-card-link:hover {
+      color: var(--accent);
+      transform: translateX(2px);
+    }
+    .portfolio-card-link svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      padding: 8px;
+      box-sizing: content-box;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(232,69,60,0.14);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .portfolio-card-link:hover svg {
+      transform: translateX(2px);
+      background: #fde6e3;
+      border-color: rgba(232,69,60,0.24);
+    }
     .portfolio-card-result {
       font-size: 12px; font-weight: 600; color: var(--accent);
     }
@@ -467,26 +515,50 @@
     /* 2-col wide cards for row of 2 */
     .portfolio-card--wide { grid-column: span 1; }
 
-    @media (max-width: 900px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .portfolio-card-footer { align-items: flex-start; }
+    }
     @media (max-width: 560px) { .portfolio-grid { grid-template-columns: 1fr; } }
 
     /* CTA */
-    .cta {
-      background: var(--bg-dark); padding: clamp(72px, 10vw, 120px) 0;
-      text-align: center; position: relative; overflow: hidden;
+    .section-heading--dark { color: var(--text-on-dark); }
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(84px, 10vw, 132px) 0;
+      background:
+        radial-gradient(circle at 50% 115%, rgba(232,69,60,0.16), transparent 34%),
+        linear-gradient(180deg, #0d0d1a 0%, #141322 100%);
     }
-    .cta::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(232,69,60,0.1) 0%, transparent 70%);
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(232,69,60,0.08), transparent 24%),
+        radial-gradient(circle at 78% 26%, rgba(168,85,247,0.07), transparent 22%);
       pointer-events: none;
     }
-    .cta h2 {
-      font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px);
-      font-weight: 700; line-height: 1.12; color: var(--text-on-dark);
-      letter-spacing: -0.02em; margin-bottom: 20px;
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
     }
-    .cta p { font-size: 17px; color: rgba(245,241,236,0.6); max-width: 480px; margin: 0 auto 40px; line-height: 1.7; }
-    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .cta-inner .section-sub {
+      color: rgba(245,241,236,0.68);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .cta-note {
+      font-size: 14px;
+      color: rgba(245,241,236,0.72);
+      line-height: 1.6;
+    }
 
     /* FOOTER */
     .footer { background: var(--bg-dark); color: rgba(245,241,236,0.5); padding: 48px 0; border-top: 1px solid var(--border-dark); }
@@ -685,6 +757,7 @@
         data-title="Coffee Matters London"
         data-tag="Client Project"
         data-desc="Coffee Matters was developed by Pixel Rebels as a full end-to-end brand and website project. The work included website strategy, copywriting, visual direction, photography selection, SEO structure, and marketing support to create a warm, modern, and conversion-ready digital presence."
+        data-case-study="/coffee-matters.html"
         data-url="https://www.coffeematterslondon.com/">
         <div class="portfolio-card-img">
           <img src="assets/coffeematters_portofolio2.webp" alt="Coffee Matters London" loading="lazy" width="1200" height="800">
@@ -703,7 +776,10 @@
         </div>
         <div class="portfolio-card-footer">
           <span class="portfolio-card-client">Client Project</span>
-          <span class="portfolio-card-result">Strategy + Copywriting + Visual Direction + SEO + Marketing Support</span>
+          <a href="/coffee-matters.html" class="portfolio-card-link" aria-label="Read the Coffee Matters London case study">
+            Read Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
 
@@ -713,6 +789,7 @@
         data-title="Ictinus Contractors"
         data-tag="Client Project"
         data-desc="Ictinus Contractors was created by Pixel Rebels as a complete business website and brand presentation. The project covered structure, messaging, visual direction, SEO foundations, and lead-focused strategy to position the company as professional, trustworthy, and premium."
+        data-case-study="/ictinus-contractors.html"
         data-url="https://ictinuscontractors.co.uk/">
         <div class="portfolio-card-img">
           <img src="assets/Ictinus_portofolio.webp" alt="Ictinus Contractors" loading="lazy" width="1200" height="800">
@@ -731,7 +808,10 @@
         </div>
         <div class="portfolio-card-footer">
           <span class="portfolio-card-client">Client Project</span>
-          <span class="portfolio-card-result">Website Structure + Brand Positioning + Copywriting + SEO + Conversion Strategy</span>
+          <a href="/ictinus-contractors.html" class="portfolio-card-link" aria-label="Read the Ictinus Contractors case study">
+            Read Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
 
@@ -824,16 +904,17 @@
 </section>
 
 <!-- CTA -->
-<section class="cta">
-  <div class="container">
-    <h2 class="reveal">Ready to Join Our Portfolio?</h2>
-    <p class="reveal reveal-delay-1">Let's create something amazing together. Your project could be our next success story.</p>
-    <div class="cta-actions reveal reveal-delay-2">
-      <a href="/#quote" class="btn btn-primary">
-        Start Your Project
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
+<section class="cta-section">
+  <div class="container cta-inner">
+    <h2 class="section-heading section-heading--dark reveal">
+      Ready to Launch a Website<br><span class="accent-text">That Works?</span>
+    </h2>
+    <p class="section-sub reveal reveal-delay-1">Let's build something that brings you real results.</p>
+    <a href="/#quote" class="btn btn-primary reveal reveal-delay-2">
+      &#128172;&ensp;Tell Us About Your Project &rarr;
+    </a>
+    <p class="cta-note reveal reveal-delay-3">We respond within 24 hours.</p>
+    <p class="cta-note reveal reveal-delay-3" style="margin-top:-8px;opacity:0.6;">We take on a small number of projects each month to keep quality high. Currently booking for May 2026.</p>
   </div>
 </section>
 
@@ -942,6 +1023,32 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
 
+  function addTilt(selector, intensity = 8) {
+    document.querySelectorAll(selector).forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        if (window.innerWidth < 900) return;
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);
+        const dy = (e.clientY - cy) / (rect.height / 2);
+        const rotX = -dy * intensity;
+        const rotY = dx * intensity;
+        card.style.transition = 'transform 0.05s ease';
+        card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03,1.03,1.03)`;
+        const px = ((e.clientX - rect.left) / rect.width) * 100;
+        const py = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--glow-x', px + '%');
+        card.style.setProperty('--glow-y', py + '%');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.6s cubic-bezier(0.23,1,0.32,1)';
+        card.style.transform = '';
+      });
+    });
+  }
+  addTilt('.portfolio-card', 8);
+
   // Filter
   const filterBtns = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.portfolio-card');
@@ -992,10 +1099,39 @@
     }
 
     document.querySelectorAll('.portfolio-card').forEach(card => {
+      const caseStudyUrl = card.dataset.caseStudy;
       const overlay = card.querySelector('.portfolio-card-overlay');
       if (overlay) {
         overlay.style.cursor = 'pointer';
-        overlay.addEventListener('click', () => openPreview(card));
+        overlay.setAttribute('role', 'button');
+        overlay.setAttribute('tabindex', '0');
+        overlay.setAttribute('aria-label', `Preview ${card.dataset.title}`);
+        overlay.addEventListener('click', (event) => {
+          event.stopPropagation();
+          openPreview(card);
+        });
+        overlay.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.stopPropagation();
+            openPreview(card);
+          }
+        });
+      }
+      if (caseStudyUrl) {
+        card.setAttribute('role', 'link');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `Open ${card.dataset.title} case study`);
+        card.addEventListener('click', (event) => {
+          if (event.target.closest('a')) return;
+          window.location.href = caseStudyUrl;
+        });
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            window.location.href = caseStudyUrl;
+          }
+        });
       }
     });
 
