@@ -403,6 +403,37 @@
     /* =========================================
        HERO (dark, compact)
        ========================================= */
+    /* Three.js dots — left & right vertical strips only */
+    .about-hero-dots {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg,
+        black 0%,
+        black 18%,
+        transparent 30%,
+        transparent 70%,
+        black 82%,
+        black 100%
+      );
+      mask-image: linear-gradient(90deg,
+        black 0%,
+        black 18%,
+        transparent 30%,
+        transparent 70%,
+        black 82%,
+        black 100%
+      );
+    }
+    .about-hero-dots canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .about-hero .container { position: relative; z-index: 2; }
+
     .about-hero {
       background:
         radial-gradient(120% 100% at 50% -20%, #2f315d 0%, #1f2140 34%, #141426 62%, #0f0f1a 100%),
@@ -797,10 +828,11 @@
 
 <!-- ========== HERO ========== -->
 <section class="about-hero">
+  <div class="about-hero-dots" id="aboutDots"></div>
   <div class="container">
     <div class="about-hero-label reveal">Who We Are</div>
     <h1 class="reveal reveal-delay-1">
-      We started this because small businesses deserve better websites.
+      <span class="ab-h1-line">We started this because small businesses deserve better websites.</span>
     </h1>
     <p class="reveal reveal-delay-2">
       Not template sites. Not overpriced agency builds. Real websites that actually bring in customers — built by people who care about getting it right.
@@ -1009,6 +1041,179 @@
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
+</script>
+
+<!-- Three.js for about hero animation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // ========== ABOUT DOTTED SURFACE ==========
+  (function initAboutDots() {
+    var container = document.getElementById('aboutDots');
+    if (!container || typeof THREE === 'undefined') return;
+
+    var SEPARATION = 150;
+    var AMOUNTX = 40;
+    var AMOUNTY = 60;
+
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x0f0f1a, 2000, 10000);
+
+    var camera = new THREE.PerspectiveCamera(
+      60, window.innerWidth / window.innerHeight, 1, 10000
+    );
+    camera.position.set(0, 355, 1220);
+
+    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    var positions = [];
+    var colors = [];
+    for (var ix = 0; ix < AMOUNTX; ix++) {
+      for (var iy = 0; iy < AMOUNTY; iy++) {
+        positions.push(
+          ix * SEPARATION - (AMOUNTX * SEPARATION) / 2,
+          0,
+          iy * SEPARATION - (AMOUNTY * SEPARATION) / 2
+        );
+        colors.push(200 / 255, 200 / 255, 200 / 255);
+      }
+    }
+
+    var geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+    var material = new THREE.PointsMaterial({
+      size: 8,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      sizeAttenuation: true
+    });
+
+    var points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    var count = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      var posArr = geometry.attributes.position.array;
+      var i = 0;
+      for (var ax = 0; ax < AMOUNTX; ax++) {
+        for (var ay = 0; ay < AMOUNTY; ay++) {
+          posArr[i * 3 + 1] =
+            Math.sin((ax + count) * 0.3) * 50 +
+            Math.sin((ay + count) * 0.5) * 50;
+          i++;
+        }
+      }
+      geometry.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      count += 0.03;
+    }
+
+    window.addEventListener('resize', function () {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      animate();
+    } else {
+      renderer.render(scene, camera);
+    }
+  })();
+
+  // ========== ABOUT HERO H1 LETTER EFFECTS ==========
+  const abH1 = document.querySelector('.about-hero h1');
+  if (abH1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const shuffleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const glitchChars  = '!#$%&*@~^';
+    const activeIntervals = [];
+
+    function runShuffle(span) {
+      const original = span.dataset.original || span.textContent;
+      span.dataset.original = original;
+      let i = 0;
+      const interval = setInterval(() => {
+        span.textContent = original.split('').map((char, idx) => {
+          if (char === ' ') return ' ';
+          if (idx < i) return original[idx];
+          if (idx <= i + 2) return shuffleChars[Math.floor(Math.random() * shuffleChars.length)];
+          return original[idx];
+        }).join('');
+        i += 1;
+        if (i >= original.length) {
+          clearInterval(interval);
+          span.textContent = original;
+        }
+      }, 40);
+      activeIntervals.push(interval);
+    }
+
+    function resetAll() {
+      activeIntervals.forEach(id => clearInterval(id));
+      activeIntervals.length = 0;
+      abH1.querySelectorAll('span').forEach(span => {
+        if (span.dataset.original) span.textContent = span.dataset.original;
+      });
+    }
+
+    abH1.addEventListener('mouseenter', () => { resetAll(); abH1.querySelectorAll('span').forEach(runShuffle); });
+    abH1.addEventListener('mouseleave', resetAll);
+
+    // Ambient glitch
+    (function ambientGlitch() {
+      function getLetterNodes() {
+        const nodes = [];
+        abH1.querySelectorAll('span').forEach(span => {
+          const original = span.dataset.original || span.textContent;
+          span.dataset.original = original;
+          original.split('').forEach((char, idx) => {
+            if (char.trim()) nodes.push({ span, idx, char });
+          });
+        });
+        return nodes;
+      }
+
+      function flashLetter() {
+        const nodes = getLetterNodes();
+        if (!nodes.length) return;
+
+        const count = Math.random() < 0.4 ? 2 : 1;
+        const picks = [];
+        while (picks.length < count) {
+          const pick = nodes[Math.floor(Math.random() * nodes.length)];
+          if (!picks.includes(pick)) picks.push(pick);
+        }
+
+        picks.forEach(({ span, idx }) => {
+          const original = span.dataset.original;
+          const frames = 3 + Math.floor(Math.random() * 3);
+          let f = 0;
+          const flicker = setInterval(() => {
+            const chars = original.split('');
+            chars[idx] = glitchChars[Math.floor(Math.random() * glitchChars.length)];
+            span.textContent = chars.join('');
+            f++;
+            if (f >= frames) {
+              clearInterval(flicker);
+              span.textContent = original;
+            }
+          }, 60);
+        });
+
+        setTimeout(flashLetter, 1800 + Math.random() * 2700);
+      }
+
+      setTimeout(flashLetter, 2500);
+    })();
+  }
 </script>
 
 </body>
