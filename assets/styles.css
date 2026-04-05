@@ -1646,6 +1646,20 @@
       flex-wrap: wrap;
       gap: 24px;
     }
+    .footer-brand-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .footer-tagline {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      color: rgba(245,241,236,0.32);
+      margin: 0;
+      padding-left: 2px;
+    }
     .footer-brand {
       display: flex;
       align-items: center;
