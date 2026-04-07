@@ -625,7 +625,7 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      max-width: 800px;
+      max-width: 920px;
       margin: 0 auto;
     }
     .hero-badge {
@@ -664,11 +664,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: accentGradientFlow 5s ease-in-out infinite;
-      white-space: nowrap;
-    }
-    /* On screens too narrow to fit the accent line in one row, allow wrap */
-    @media (max-width: 860px) {
-      .hero h1 .accent-line { white-space: normal; }
     }
     @keyframes accentGradientFlow {
       0%   { background-position: 0% 50%; }
@@ -810,9 +805,6 @@
     /* Glitch hero h1 transition */
     .hero h1 {
       cursor: default;
-    }
-    .hero h1 .accent-line {
-      display: inline-block;
     }
 
     /* Magnetic btn cursor */
