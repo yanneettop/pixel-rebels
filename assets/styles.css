@@ -145,6 +145,30 @@
       pointer-events: none; z-index: 0;
     }
 
+    /* Animated perspective grid on light sections */
+    .portfolio::before, .process::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,26,46,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,26,46,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      background-position: 0 0;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 10%, transparent 70%);
+      animation: gridDrift 20s linear infinite;
+    }
+    @keyframes gridDrift {
+      0%   { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .portfolio::before, .process::before { animation: none; }
+    }
+
     /* Ensure content sits above shimmer */
     .portfolio .container, .process .container, .about .container { position: relative; z-index: 1; }
 
@@ -173,6 +197,49 @@
     }
     .wave-divider--to-dark svg { bottom: 0; }
     .wave-divider--to-light svg { top: 0; }
+
+    /* Data-stream hard-cut divider (Process section) */
+    .section-divider--data {
+      position: relative;
+      z-index: 10;
+      height: 2px;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .section-divider--data::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent, rgba(232,69,60,0.25), rgba(168,85,247,0.18), transparent
+      );
+      mask-image: linear-gradient(90deg, transparent 5%, black 20%, black 80%, transparent 95%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 5%, black 20%, black 80%, transparent 95%);
+    }
+    .section-divider--data::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      width: 60px;
+      height: 3px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), rgba(168,85,247,0.8), transparent);
+      box-shadow: 0 0 10px rgba(232,69,60,0.4), 0 0 20px rgba(232,69,60,0.15);
+      z-index: 1;
+      animation: dataParticle 3s ease-in-out infinite;
+    }
+    @keyframes dataParticle {
+      0%   { left: -60px; opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { left: 100%; opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .section-divider--data::before { animation: none; opacity: 0; }
+    }
 
     /* =========================================
        PARALLAX
@@ -691,6 +758,8 @@
       gap: 10px;
       margin-top: clamp(32px, 4vw, 52px);
       color: rgba(245,241,236,0.45);
+      background: radial-gradient(ellipse 120px 100px at center, rgba(15,15,26,1) 0%, rgba(15,15,26,0.85) 40%, transparent 100%);
+      padding: 36px 52px;
     }
 
     /* Mouse outline */
