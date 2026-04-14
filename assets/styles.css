@@ -815,32 +815,33 @@
 
     /* ── Hero mobile refinements ── */
     @media (max-width: 480px) {
-      .hero { padding: 48px 0 40px; min-height: auto; justify-content: flex-start; padding-top: clamp(80px, 16vh, 140px); }
-      .hero-badge {
-        font-size: 11px;
-        padding: 6px 14px;
-        margin-bottom: 18px;
+      .hero {
+        min-height: 100svh;
+        justify-content: flex-start;
+        padding: 0 0 40px;
       }
+      .hero .hero-inner {
+        margin-top: 24svh;
+      }
+      .hero-badge { display: none; }
       .hero h1 {
-        font-size: 28px;
-        margin-bottom: 14px;
+        font-size: 24px;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
       }
       .hero-sub {
-        font-size: 14px;
-        margin-bottom: 24px;
-        line-height: 1.6;
+        font-size: 13px;
+        margin-bottom: 20px;
+        line-height: 1.55;
+        max-width: 320px;
       }
-      .hero-actions { gap: 12px; }
+      .hero-actions { gap: 10px; }
       .hero-actions .btn {
-        font-size: 14px;
-        padding: 12px 24px;
+        font-size: 13px;
+        padding: 11px 22px;
       }
-      .hero-scroll {
-        margin-top: 24px;
-        padding: 24px 40px;
-      }
-      .scroll-mouse { width: 22px; height: 36px; }
-      .scroll-mouse-wheel { width: 3px; height: 7px; }
+      .hero-actions .btn-secondary { display: none; }
+      .hero-scroll { display: none; }
     }
 
     /* =========================================
