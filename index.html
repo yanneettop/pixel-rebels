@@ -215,7 +215,7 @@
     </div>
     <h1 class="reveal reveal-delay-1">
       We Don't Just Build Websites
-      <span class="accent-line">We Build Worlds You Can Live In</span>
+      <span class="accent-line">We Build Worlds <br class="mobile-headline-break">You Can Live In</span>
     </h1>
     <p class="hero-sub reveal reveal-delay-2">
       Strategic branding, web design, and digital experiences — crafted to convert, priced to make sense.
@@ -230,6 +230,12 @@
         View Our Work
       </a>
     </div>
+    <div class="hero-service-chips reveal reveal-delay-3" aria-label="Featured services">
+      <span>Web Design</span>
+      <span>Branding</span>
+      <span>Visual Identity</span>
+    </div>
+    <a class="hero-mobile-cue reveal reveal-delay-3" href="#portfolio">Explore our work ↓</a>
     <div class="hero-scroll">
       <div class="scroll-mouse">
         <div class="scroll-mouse-wheel"></div>
@@ -310,7 +316,7 @@
         </div>
       </div>
 
-      <div class="portfolio-card reveal-card reveal-delay-2"
+      <div class="portfolio-card portfolio-card--artiling reveal-card reveal-delay-2"
         data-img="assets/artiling_portfolio.jpg"
         data-title="Artiling Studio"
         data-tag="Brand Identity · Portfolio System · Lead Flow"
@@ -1210,7 +1216,11 @@
 
   // ========== HERO H1 LETTER EFFECTS ==========
   const heroH1 = document.querySelector('.hero h1');
-  if (heroH1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (
+    heroH1 &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    !window.matchMedia('(max-width: 480px)').matches
+  ) {
     const shuffleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const glitchChars  = '!#$%&*@~^';
     const activeIntervals = [];
